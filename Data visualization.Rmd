@@ -1,0 +1,295 @@
+---
+title: "Data visualization"
+author: "Jubril"
+date: "6/29/2022"
+output: html_document
+---
+
+
+Scatter plot
+
+Customization of scatter plots is very much acceptable in R
+Examples are:
+  Main : The title for the plot ( Displayed at the Top)
+  Sub : The subtitle for the plot( displayed at the Bottom)
+  Xlim : The X-axis scale; Uses the format c(min,max);
+automatically determined by default 
+  ylim : The Y-axis: Uses the format c(min,max);
+automatically determine by default
+  xlab: The x-axis title
+  ylab : the Y-axis title
+  
+  col:Determines the colours used for points and lines;accepts the charracter strings of colour names (red,green,e.t.c)
+  pch : the type of point to use ( Circle, Square, Triangle e.t.c); accepts values 0 to 25 for symbols and 32 to 255 for characters
+  cex: The amount to scale the size of points; accept a numeric value; default is 1
+  lty : defines the line type; accepts various characters strings (solid and dashed, dotted, e.t.c)
+  lwd : Defines the line width; accepts a positive number; default is 1
+  
+```{r}
+x<- rnorm(200)
+plot(x)
+```
+  
+  Plotting a scatter with a sequence of numbers between -5 and 5, incrementing by 0.1. choose the mean as 2 and standard deviation 0.8
+
+```{r}
+x<- seq(-5,5, by = 0.1)
+y <- dnorm(x,mean =2, sd = 0.8)
+
+plot(x,y)
+```
+ The following code will create a scatter plot for the relation between wt(WEIGHT) AND MPG(MILESPERGALLON)  using mtcars dataset
+ 
+```{r}
+mtcars
+```
+ 
+```{r}
+?mtcars
+# to chect the info about the data
+```
+
+```{r}
+data(mtcars)
+plot(x = mtcars$wt, y= mtcars$mpg,
+     main = "scatterplot", xlab = "car weigth", ylab = "Miles per Gallon")
+```
+```{r}
+plot(x=mtcars$wt,
+     y=mtcars$mpg,
+     main = "scatterplot",
+     xlab = "car weight",
+     ylab = "Miles per Gallon",
+     xlim = c(2.5,5),
+     ylim = c(10,30),
+     pch = 8,
+     col="red")
+```
+
+```{r}
+iris
+```
+
+```{r}
+?iris
+```
+
+```{r}
+#iris
+names(iris)
+iris$Species
+```
+```{r}
+unique(iris$Species)
+```
+```{r}
+iris
+plot(data=iris,
+     main="iris Data",
+     Sepal.Length ~ Petal.Length,
+     xlab="petal lenght (cm)",
+     ylab="Sepal Lenght (cm)",
+     pch = c(10,17,18) [as.numeric(Species)],
+     col=c("magenta","purple","blue")[as.numeric(Species)])
+```
+```{r}
+x<-rnorm(100)
+x
+```
+```{r}
+y<- 3*x + rnorm(100)
+y
+```
+```{r}
+z<- sqrt(1+y^2)+ rnorm(100)
+z
+```
+
+```{r}
+x<-rnorm(100)
+y<- 3*x + rnorm(100)
+z<- sqrt(1+y^2)+ rnorm(100)
+plot(x,y,
+     main = "conditional scatter plot",
+     pch = ifelse(x*y > 5,10,20),
+     xlim = range(x),
+     ylim = range(y,z),
+     xlab = "x",
+     ylab = "value",
+     col = ifelse(y >= mean(y), "blue","magenta"))
+```
+Simple Bar chart
+```{r}
+mtcars
+Counts <- table(mtcars$gear)
+Counts
+```
+
+```{r}
+barplot(Counts,main = "Car Distribution by gear",
+        xlab ="Number of Gears")
+```
+
+```{r}
+barplot(Counts,main = "Car distribution by Gear",
+        ylab = "Number of Gears",horiz=TRUE)
+```
+
+```{r}
+mtcars
+Counts <- table(mtcars$vs,mtcars$gear)
+Counts
+```
+
+```{r}
+barplot(Counts, main = "Car distribution by gear and vs",
+        beside = TRUE,
+        horiz = TRUE,
+        ylab = "Number of Gears",
+        xlab = "Frequency",
+        col = c("Lightblue","brown"),
+        legend = rownames(Counts))
+```
+
+```{r}
+colors <- c("green","orange","brown")
+Months <- c("mar", "apr","may","jul","aug")
+Regions <- c("East","West","North")
+
+values <- matrix(c(2,9,3,11,9,4,8,7,3,12,5,2,8,10,11),
+                 nrow = 3, ncol = 5, byrow = TRUE)
+ barplot(values,main = "total revenue", names.arg = Months,
+         las = 1,xlab = "Months", ylab = "revenue",
+         col=colors , beside = TRUE, border = "red", font.axis =7,
+         col.axis = "green",cex.axis = 1, col.lab = "red")
+ lengend("topleft",Regions,cex = 0.5, fill = colors)
+ values
+```
+
+```{r}
+percentage <- c(10,15,38,28,10)
+labels <- c("0-8 yrs 10%","9-11 yrs 15%", "12 yrs 38%","13-15 yrs 28%", "16 and above yrs 10% ")
+pie(percentage,labels = labels, main ="Education percent", col = c("blue","yellow","Green","red","brown"))
+```
+```{r}
+X <-c(21,62,10,53)
+labels <- c("LONDON","NEW YORK","SINGAPORE","MUMBAI")
+PIEPERCENT <- round(100*X/sum(X),1)
+
+pie(X, labels =PIEPERCENT,main ="city pie chart",
+    col = rainbow(length(X)))
+legend("bottomright", c("LONDON","NEW YORK","SINGAPORE","MUMBAI"), cex = 0.8, fill = rainbow(length(X)))
+```
+LiNE CHART
+```{r}
+V <- c(9,12,17,23,21,30,35,31,36)
+X <- c(1,2,3,4,5,6,7,8,9)
+plot(X,V, type = "o", col = "blue", xlab = "month", ylab = "Growth", main = "Growth Rate")
+
+```
+HISTOGRAM
+```{r}
+random = rnorm(100)
+hist(random,border = "Blue",col = "red")
+```
+```{r}
+AirPassengers
+hist(AirPassengers, main = "Histogram for air passengers",
+     xlab = "passengers",
+     border = "blue",
+     col = "yellow",
+     breaks = 6)
+```
+
+```{r}
+ToothGrowth
+hist(ToothGrowth$len, main = "Histogram for tooth growth",
+     xlab = "length",
+     border = "blue",
+     col = "red",
+     breaks = 6)
+```
+Learning ggplot
+
+ggplot (data = <DATA> ) + GEOM_FUNCTION (mapping = aes( <MAPPINGS>), stat = <STAT> , position = <POSITION> ) + COORDINATE_FUNCTION> + FACET_FUNCTION> +SCALE_FUNCTION> + THEME_FUNCTION>
+```{r}
+library(ggplot2)
+```
+
+
+```{r}
+?ggplot2
+```
+
+```{r}
+a <- ggplot(economics, aes(date, unemploy))
+a + geom_path(lineend="butt", linejoin="round", linemitre=1)
+```
+```{r}
+a + geom_polygon(aes(group = group))
+```
+```{r}
+a + geom_ribbon(aes(ymin=unemploy - 900, ymax=unemploy + 900))
+```
+
+```{r}
+ b <- ggplot(seals, aes(x = long, y = lat))
+b + geom_curve(aes(yend = lat + 1, xend=long+1),curvature=1)
+```
+```{r}
+b + geom_rect(aes(xmin = long, ymin=lat, xmax= long + 1, ymax = lat + 1)) 
+```
+
+```{r}
+c <- ggplot(mpg,aes(hwy))
+c + geom_area(stat="bin")
+```
+
+```{r}
+c + geom_density(kernel = "gaussian")
+```
+
+```{r}
+c + geom_dotplot()
+```
+
+```{r}
+c + geom_freqpoly()
+```
+
+```{r}
+c + geom_histogram(binwidth = 5)
+```
+
+```{r}
+e <- ggplot(mpg, aes(cty, hwy))
+e + geom_label(aes(label = cty), nudge_x = 1, nudge_y = 1, check_overlap = TRUE) 
+```
+
+```{r}
+e + geom_jitter(height = 2, width = 2) 
+```
+```{r}
+e + geom_point()
+```
+```{r}
+f <- ggplot(mpg, aes(class, hwy))
+f + geom_col()
+```
+```{r}
+f + geom_boxplot()
+```
+```{r}
+d <- ggplot(mpg, aes(fl))
+d + geom_bar() 
+```
+```{r}
+n <- d + geom_bar(aes(fill = fl))
+n + scale_fill_brewer(palette = "Reds")
+```
+```{r}
+s <- ggplot(mpg, aes(fl, fill = drv))
+s + geom_bar(position = "dodge")
+```
+
+
